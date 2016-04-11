@@ -1,0 +1,8 @@
+<project default="clean-compile">
+    <target name="clean-compile">
+        <mkdir dir="bin"/>
+        <javac srcdir="." destdir="bin"/>
+    </target>
+    <target name="run">
+    </target>
+</project>
