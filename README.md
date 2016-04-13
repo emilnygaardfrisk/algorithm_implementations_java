@@ -1,2 +1,8 @@
 # algorithm_implementations_java
-Some algorithms implemented in java by me
+
+## heapsort
+clean-build with: `ant`
+
+run with: `ant run` (doesn't work yet)
+
+## more to come
