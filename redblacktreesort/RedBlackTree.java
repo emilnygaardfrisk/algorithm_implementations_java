@@ -117,7 +117,7 @@ public class RedBlackTree implements BinaryTree {
 
     public Node delete(Node z) { 
         Node y = z;
-        Node x = null;
+        Node x = nil;
         String originalColor = y.color;
         if (z.left == nil) {
             x = z.right;
