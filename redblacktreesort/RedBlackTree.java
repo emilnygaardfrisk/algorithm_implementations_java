@@ -7,7 +7,8 @@ public class RedBlackTree implements BinaryTree {
         Node n = new Node();
         n.key = 1;
         t.insert(n);
-
+        System.out.println(t.root.key);
+        t.delete(n);
         System.out.println(t.root.key);
     }
 
@@ -111,8 +112,54 @@ public class RedBlackTree implements BinaryTree {
         v.parent = u.parent;
     }
 
-    private void deleteFixup(Node n) {
-        
+    private void deleteFixup(Node x) {
+        while (x != root && x.color == "BLACK") {
+            if (x == x.parent.left) {
+                Node w = x.parent.right;
+                if (w.color == "RED") {
+                    w.color = "BLACK";
+                    x.parent.color = "RED";
+                    leftRotate(x.parent);
+                    w = x.parent.right;
+                }
+                if (w.left.color == "BLACK" && w.right.color == "BLACK") {
+                    w.color = "RED";
+                    w = x.parent.right;
+                } else if (w.right.color == "BLACK") {
+                    w.left.color = "BLACK";
+                    w.color = "RED";
+                    rightRotate(w);
+                    w = x.parent.right;
+                }
+                w.color = x.parent.color;
+                x.parent.color = "BLACK";
+                w.right.color = "BLACK";
+                leftRotate(x.parent);
+                x = root;
+            } else {
+                Node w = x.parent.left;
+                if (w.color == "RED") {
+                    w.color = "BLACK";
+                    x.parent.color = "RED";
+                    rightRotate(x.parent);
+                    w = x.parent.left;
+                }
+                if (w.left.color == "BLACK" && w.right.color == "BLACK") {
+                    w.color = "RED";
+                    w = x.parent.left;
+                } else if (w.left.color == "BLACK") {
+                    w.right.color = "BLACK";
+                    w.color = "RED";
+                    leftRotate(w);
+                    w = x.parent.right;
+                }
+                w.color = x.parent.color;
+                x.parent.color = "BLACK";
+                w.left.color = "BLACK";
+                rightRotate(x.parent);
+                x = root;
+            }
+        }      
     }
 
     public Node delete(Node z) { 
@@ -131,19 +178,20 @@ public class RedBlackTree implements BinaryTree {
             originalColor = y.color;
             x = y.right;
             if (y.parent == z)
-                x.p = y;
+                x.parent= y;
             else {
                 transplant(y, y.right);
                 y.right = z.right;
                 y.right.parent = y;
             }
             transplant(x,y);
-            y.lelft = z.left;
+            y.left = z.left;
             y.left.parent = y;
             y.color = z.color;
         }
         if (originalColor == "BLACK")
             deleteFixup(x);
+        return z;
     }
 
     public Node search(int key){return null;}
